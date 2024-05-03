@@ -99,3 +99,59 @@ class EqualWeightPortfolio:
 
 
 """
+Problem 2:
+
+Implement a risk parity strategy as dataframe "rp". Please do "not" include SPY.
+"""
+
+
+class RiskParityPortfolio:
+    def __init__(self, exclude, lookback=50):
+        self.exclude = exclude
+        self.lookback = lookback
+
+    def calculate_weights(self):
+        # Get the assets by excluding the specified column
+        assets = df.columns[df.columns != self.exclude]
+
+        # Calculate the portfolio weights
+        self.portfolio_weights = pd.DataFrame(index=df.index, columns=df.columns)
+
+        """
+        TODO: Complete Task 2 Below
+        """
+        for i in range(self.lookback + 1, len(df)):
+            std_devs = df_returns.copy()[assets].iloc[i - self.lookback : i].std()
+            inv_std_devs = 1 / std_devs
+            self.portfolio_weights.loc[df.index[i], assets] = inv_std_devs / np.sum(
+                inv_std_devs
+            )
+        """
+        TODO: Complete Task 2 Above
+        """
+
+        self.portfolio_weights.ffill(inplace=True)
+        self.portfolio_weights.fillna(0, inplace=True)
+
+    def calculate_portfolio_returns(self):
+        # Ensure weights are calculated
+        if not hasattr(self, "portfolio_weights"):
+            self.calculate_weights()
+
+        # Calculate the portfolio returns
+        self.portfolio_returns = df_returns.copy()
+        assets = df.columns[df.columns != self.exclude]
+        self.portfolio_returns["Portfolio"] = (
+            self.portfolio_returns[assets]
+            .mul(self.portfolio_weights[assets])
+            .sum(axis=1)
+        )
+
+    def get_results(self):
+        # Ensure portfolio returns are calculated
+        if not hasattr(self, "portfolio_returns"):
+            self.calculate_portfolio_returns()
+
+        return self.portfolio_weights, self.portfolio_returns
+
+
