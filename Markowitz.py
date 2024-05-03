@@ -252,3 +252,90 @@ class MeanVariancePortfolio:
 
         return self.portfolio_weights, self.portfolio_returns
 
+
+"""
+Helper Function:
+
+The following functions will help check your solution,
+Please see the following "Performance Check" section
+"""
+
+
+class Helper:
+    def __init__(self):
+        self.eqw = EqualWeightPortfolio("SPY").get_results()
+        self.rp = RiskParityPortfolio("SPY").get_results()
+        self.mv_list = [
+            MeanVariancePortfolio("SPY").get_results(),
+            MeanVariancePortfolio("SPY", gamma=100).get_results(),
+            MeanVariancePortfolio("SPY", lookback=100).get_results(),
+            MeanVariancePortfolio("SPY", lookback=100, gamma=100).get_results(),
+        ]
+
+    def plot_performance(self, strategy_list=None):
+        # Plot cumulative returns
+        _, ax = plt.subplots()
+
+        (1 + df_returns["SPY"]).cumprod().plot(ax=ax, label="SPY")
+        (1 + self.eqw[1]["Portfolio"]).cumprod().plot(ax=ax, label="equal_weight")
+        (1 + self.rp[1]["Portfolio"]).cumprod().plot(ax=ax, label="risk_parity")
+
+        if strategy_list != None:
+            for i, strategy in enumerate(strategy_list):
+                (1 + strategy[1]["Portfolio"]).cumprod().plot(
+                    ax=ax, label=f"strategy {i+1}"
+                )
+
+        ax.set_title("Cumulative Returns")
+        ax.set_xlabel("Date")
+        ax.set_ylabel("Cumulative Returns")
+        ax.legend()
+        plt.show()
+        return None
+
+    def plot_allocation(self, df_weights):
+        df_weights = df_weights.fillna(0).ffill()
+
+        # long only
+        df_weights[df_weights < 0] = 0
+
+        # Plotting
+        _, ax = plt.subplots()
+        df_weights.plot.area(ax=ax)
+        ax.set_xlabel("Date")
+        ax.set_ylabel("Allocation")
+        ax.set_title("Asset Allocation Over Time")
+        plt.show()
+        return None
+
+    def report_metrics(self):
+        df_bl = pd.DataFrame()
+        df_bl["EQW"] = pd.to_numeric(self.eqw[1]["Portfolio"], errors="coerce")
+        df_bl["RP"] = pd.to_numeric(self.rp[1]["Portfolio"], errors="coerce")
+        df_bl["SPY"] = df_returns["SPY"]
+        for i, strategy in enumerate(self.mv_list):
+            df_bl[f"MV {i+1}"] = pd.to_numeric(
+                strategy[1]["Portfolio"], errors="coerce"
+            )
+            """
+            NOTE: You can add your strategy here.
+            """
+
+        qs.reports.metrics(df_bl, mode="full", display=True)
+
+    def plot_mean_variance_portofolio_performance(self):
+        self.plot_performance(self.mv_list)
+
+    def plot_eqw_allocation(self):
+        self.plot_allocation(self.eqw[0])
+
+    def plot_rp_allocation(self):
+        self.plot_allocation(self.rp[0])
+
+    def plot_mean_variance_allocation(self):
+        self.plot_allocation(self.mv_list[0][0])
+        self.plot_allocation(self.mv_list[1][0])
+
+    def plot_report_metrics(self):
+        self.report_metrics()
+
