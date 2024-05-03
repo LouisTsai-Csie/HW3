@@ -140,3 +140,85 @@ class MyPortfolio:
 
         return self.portfolio_weights, self.portfolio_returns
 
+
+"""
+Assignment Judge
+
+The following functions will help check your solution.
+"""
+
+
+class AssignmentJudge:
+    def __init__(self):
+        self.mp = MyPortfolio(df, "SPY", lookback=375).get_results()
+        self.Bmp = MyPortfolio(Bdf, "SPY", lookback=375).get_results()
+
+    def plot_performance(self, price, strategy):
+        # Plot cumulative returns
+        _, ax = plt.subplots()
+        returns = price.pct_change().fillna(0)
+        (1 + returns["SPY"]).cumprod().plot(ax=ax, label="SPY")
+        (1 + strategy[1]["Portfolio"]).cumprod().plot(ax=ax, label=f"MyPortfolio")
+
+        ax.set_title("Cumulative Returns")
+        ax.set_xlabel("Date")
+        ax.set_ylabel("Cumulative Returns")
+        ax.legend()
+        plt.show()
+        return None
+
+    def plot_allocation(self, df_weights):
+        df_weights = df_weights.fillna(0).ffill()
+
+        # long only
+        df_weights[df_weights < 0] = 0
+
+        # Plotting
+        _, ax = plt.subplots()
+        df_weights.plot.area(ax=ax)
+        ax.set_xlabel("Date")
+        ax.set_ylabel("Allocation")
+        ax.set_title("Asset Allocation Over Time")
+        plt.show()
+        return None
+
+    def report_metrics(self, price, strategy, show=False):
+        df_bl = pd.DataFrame()
+        returns = price.pct_change().fillna(0)
+        df_bl["SPY"] = returns["SPY"]
+        df_bl[f"MP"] = pd.to_numeric(strategy[1]["Portfolio"], errors="coerce")
+
+        qs.reports.metrics(df_bl, mode="full", display=show)
+
+        sharpe_ratio = qs.stats.sharpe(df_bl)
+
+        return sharpe_ratio
+
+    def cumulative_product(self, dataframe):
+        (1 + dataframe.pct_change().fillna(0)).cumprod().plot()
+
+    def check_sharp_ratio_greater_than_one(self):
+        if self.report_metrics(df, self.mp)[1] > 1:
+            print("Problem 4.1 Success - Get 10 points")
+            return 10
+        else:
+            print("Problem 4.1 Fail")
+        return 0
+
+    def check_sharp_ratio_greater_than_spy(self):
+        if (
+            self.report_metrics(Bdf, self.Bmp)[1]
+            > self.report_metrics(Bdf, self.Bmp)[0]
+        ):
+            print("Problem 4.2 Success - Get 10 points")
+            return 10
+        else:
+            print("Problem 4.2 Fail")
+        return 0
+
+    def check_all_answer(self):
+        score = 0
+        score += self.check_sharp_ratio_greater_than_one()
+        score += self.check_sharp_ratio_greater_than_spy()
+        return score
+
