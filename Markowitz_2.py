@@ -222,3 +222,71 @@ class AssignmentJudge:
         score += self.check_sharp_ratio_greater_than_spy()
         return score
 
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Introduction to Fintech Assignment 3 Part 12"
+    )
+
+    parser.add_argument(
+        "--score",
+        action="append",
+        help="Score for assignment",
+    )
+
+    parser.add_argument(
+        "--allocation",
+        action="append",
+        help="Allocation for asset",
+    )
+
+    parser.add_argument(
+        "--performance",
+        action="append",
+        help="Performance for portofolio",
+    )
+
+    parser.add_argument(
+        "--report", action="append", help="Report for evaluation metric"
+    )
+
+    parser.add_argument(
+        "--cumulative", action="append", help="Cumulative product result"
+    )
+
+    args = parser.parse_args()
+
+    judge = AssignmentJudge()
+
+    if args.score:
+        if ("one" in args.score) or ("spy" in args.score):
+            if "one" in args.score:
+                judge.check_sharp_ratio_greater_than_one()
+            if "spy" in args.score:
+                judge.check_sharp_ratio_greater_than_spy()
+        elif "all" in args.score:
+            print(f"==> totoal Score = {judge.check_all_answer()} <==")
+
+    if args.allocation:
+        if "mp" in args.allocation:
+            judge.plot_allocation(judge.mp[0])
+        if "bmp" in args.allocation:
+            judge.plot_allocation(judge.Bmp[0])
+
+    if args.performance:
+        if "mp" in args.performance:
+            judge.plot_performance(df, judge.mp)
+        if "bmp" in args.performance:
+            judge.plot_performance(Bdf, judge.Bmp)
+
+    if args.report:
+        if "mp" in args.report:
+            judge.report_metrics(df, judge.mp, show=True)
+        if "bmp" in args.report:
+            judge.report_metrics(Bdf, judge.Bmp, show=True)
+
+    if args.cumulative:
+        if "mp" in args.cumulative:
+            judge.cumulative_product(df)
+        if "bmp" in args.cumulative:
+            judge.cumulative_product(Bdf)
