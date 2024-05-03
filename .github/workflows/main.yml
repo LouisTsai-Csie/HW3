@@ -49,5 +49,4 @@ jobs:
       
       - name: Check Score
         run: 
-          python Markowitz.py --score all
-          python Markowitz_2.py --score all
+          python Markowitz.py --score all && python Markowitz_2.py --score all
