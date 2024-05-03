@@ -71,11 +71,11 @@ All Problems
 
 ### Asset Allocation
 
-Problem 1 - Sharp Ratio > 1
+My Portofolio
 
 `python Markowitz_2.py --allocation mp`
 
-Problem 2 - Sharp Ration > SPY
+Big Portofolio
 
 `python Markowitz_2.py --allocation bmp`
 
@@ -85,17 +85,27 @@ My Portofolio
 
 `python Markowitz_2.py --performance mp`
 
+Big Portofolio
+
 `python Markowitz_2.py --performance bmp`
 
 ### Evaluation Metric
 
+My Portofolio
+
 `python Markowitz_2.py --report mp`
+
+Big Portofolio
 
 `python Markowitz_2.py --report bmp`
 
 ### Cumulative Result
 
+My Portofolio
+
 `python Markowitz_2.py --cumulative mp`
+
+Big Portofolio
 
 `python Markowitz_2.py --cumulative bmp`
 
