@@ -243,7 +243,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--performance",
         action="append",
-        help="Performance for portofolio",
+        help="Performance for portfolio",
     )
 
     parser.add_argument(

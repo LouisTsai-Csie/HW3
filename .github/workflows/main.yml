@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: true
 
-    name: My Portofolio
+    name: My portfolio
     runs-on: ubuntu-latest
     steps:
       - name: Check Codebase

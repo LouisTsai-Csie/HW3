@@ -11,15 +11,15 @@
 
 ### Assignment Score
 
-Problem 1 - equal weight portofolio
+Problem 1 - equal weight portfolio
 
 `python Markowitz.py --score eqw`
 
-Problem 2 - risk parity portofolio
+Problem 2 - risk parity portfolio
 
 `python Markowitz.py --score rp`
 
-Problem 3 - mean variance portofolio
+Problem 3 - mean variance portfolio
 
 `python Markowitz.py --score mv`
 
@@ -29,27 +29,27 @@ All Problems
 
 ### Asset Allocation
 
-Problem 1 - equal weight portofolio
+Problem 1 - equal weight portfolio
 
 `python Markowitz.py --allocation eqw`
 
-Problem 2 - risk parity portofolio
+Problem 2 - risk parity portfolio
 
 `python Markowitz.py --allocation rp`
 
-Problem 3 - mean variance portofolio
+Problem 3 - mean variance portfolio
 
 `python Markowitz.py --allocation mv`
 
 ### Performance Check
 
-Problem 3 - mean variance portofolio
+Problem 3 - mean variance portfolio
 
 `python Markowitz.py --performance mv`
 
 ### Evaluation Metric
 
-Problem 3 - mean variance portofolio
+Problem 3 - mean variance portfolio
 
 `python Markowitz.py --report mv`
 
@@ -71,41 +71,41 @@ All Problems
 
 ### Asset Allocation
 
-My Portofolio
+My portfolio
 
 `python Markowitz_2.py --allocation mp`
 
-Big Portofolio
+Big portfolio
 
 `python Markowitz_2.py --allocation bmp`
 
 ### Performance Check
 
-My Portofolio
+My portfolio
 
 `python Markowitz_2.py --performance mp`
 
-Big Portofolio
+Big portfolio
 
 `python Markowitz_2.py --performance bmp`
 
 ### Evaluation Metric
 
-My Portofolio
+My portfolio
 
 `python Markowitz_2.py --report mp`
 
-Big Portofolio
+Big portfolio
 
 `python Markowitz_2.py --report bmp`
 
 ### Cumulative Result
 
-My Portofolio
+My portfolio
 
 `python Markowitz_2.py --cumulative mp`
 
-Big Portofolio
+Big portfolio
 
 `python Markowitz_2.py --cumulative bmp`
 

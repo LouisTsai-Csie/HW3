@@ -323,7 +323,7 @@ class Helper:
 
         qs.reports.metrics(df_bl, mode="full", display=True)
 
-    def plot_mean_variance_portofolio_performance(self):
+    def plot_mean_variance_portfolio_performance(self):
         self.plot_performance(self.mv_list)
 
     def plot_eqw_allocation(self):
@@ -460,7 +460,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--performance",
         action="append",
-        help="Performance for portofolio",
+        help="Performance for portfolio",
     )
 
     parser.add_argument(
@@ -499,7 +499,7 @@ if __name__ == "__main__":
     """
     if args.performance:
         if "mv":
-            helper.plot_mean_variance_portofolio_performance()
+            helper.plot_mean_variance_portfolio_performance()
 
     """
     NOTE: For Report Metric
