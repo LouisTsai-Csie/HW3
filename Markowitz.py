@@ -437,3 +437,73 @@ class AssignmentJudge:
         score += self.check_answer_mv_list(self.mv_list)
         return score
 
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(
+        description="Introduction to Fintech Assignment 3 Part 1"
+    )
+    """
+    NOTE: For Assignment Judge
+    """
+    parser.add_argument(
+        "--score",
+        action="append",
+        help="Score for assignment",
+    )
+
+    parser.add_argument(
+        "--allocation",
+        action="append",
+        help="Allocation for asset",
+    )
+
+    parser.add_argument(
+        "--performance",
+        action="append",
+        help="Performance for portofolio",
+    )
+
+    parser.add_argument(
+        "--report", action="append", help="Report for evaluation metric"
+    )
+
+    args = parser.parse_args()
+
+    judge = AssignmentJudge()
+    helper = Helper()
+
+    if args.score:
+        if ("eqw" in args.score) or ("rp" in args.score) or ("mv" in args.score):
+            if "eqw" in args.score:
+                judge.check_answer_eqw(judge.eqw)
+            if "rp" in args.score:
+                judge.check_answer_rp(judge.rp)
+            if "mv" in args.score:
+                judge.check_answer_mv_list(judge.mv_list)
+        elif "all" in args.score:
+            print(f"==> totoal Score = {judge.check_all_answer()} <==")
+
+    """
+    NOTE: For Allocation
+    """
+    if args.allocation:
+        if "eqw" in args.allocation:
+            helper.plot_eqw_allocation()
+        if "rp" in args.allocation:
+            helper.plot_rp_allocation()
+        if "mv" in args.allocation:
+            helper.plot_mean_variance_allocation()
+
+    """
+    NOTE: For Performance Check
+    """
+    if args.performance:
+        if "mv":
+            helper.plot_mean_variance_portofolio_performance()
+
+    """
+    NOTE: For Report Metric
+    """
+    if args.report:
+        if "mv" in args.report:
+            helper.plot_report_metrics()
