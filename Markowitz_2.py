@@ -69,10 +69,7 @@ class MyPortfolio:
         """
         TODO: Complete Task 4 Below
         """
-        for i in range(self.lookback + 1, len(self.price)):
-            R_n = self.returns.copy()[assets].iloc[i-self.lookback:i]
-            self.portfolio_weights.loc[self.price.index[i], assets] = mv_opt(R_n, self.gamma)
-
+        self.portfolio_weights.loc[df.index[0], 'XLK'] = 1
         """
         TODO: Complete Task 4 Above
         """
